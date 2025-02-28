@@ -1,4 +1,3 @@
-//
 // build.gradle in TeamCode
 //
 // Most of the definitions for building your module reside in a common, shared
@@ -7,7 +6,6 @@
 // the build definitions, you can place those customizations in this file, but
 // please think carefully as to whether such customizations are really necessary
 // before doing so.
-
 
 // Custom definitions may go here
 
@@ -20,6 +18,13 @@ android {
 
     packagingOptions {
         jniLibs.useLegacyPackaging true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            consumerProguardFiles "proguard-rules.pro"
+        }
     }
 }
 
@@ -42,4 +47,46 @@ dependencies {
     implementation 'org.ftclib.ftclib:core:2.1.1'
     // the following is optional if you want vision
     implementation 'org.ftclib.ftclib:vision:2.1.0'
+}
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        gpr(MavenPublication) {
+            groupId = "com.yourname" // Change this to your package namespace
+            artifactId = "teamcode" // Change if needed
+            version = "1.0.0"
+
+            artifact("$buildDir/outputs/aar/TeamCode-release.aar")
+
+            pom {
+                name = "TeamCode"
+                description = "FTC Library for TeamCode"
+                url = "https://github.com/your-github-username/your-repo-name"
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://opensource.org/licenses/MIT"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "your-github-username"
+                        name = "Your Name"
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/your-github-username/your-repo-name")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+            }
+        }
+    }
 }
