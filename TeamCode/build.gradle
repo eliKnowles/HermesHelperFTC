@@ -54,9 +54,9 @@ apply plugin: 'maven-publish'
 publishing {
     publications {
         gpr(MavenPublication) {
-            groupId = "com.yourname" // Change this to your package namespace
+            groupId = "github.eliknowles" // Change this to your package namespace
             artifactId = "teamcode" // Change if needed
-            version = "1.0.0"
+            version = "1.0.1"
 
             artifact("$buildDir/outputs/aar/TeamCode-release.aar")
 
@@ -72,8 +72,8 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = "your-github-username"
-                        name = "Your Name"
+                        id = "eliKnowles"
+                        name = "Eli Knowles"
                     }
                 }
             }
@@ -82,10 +82,10 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/your-github-username/your-repo-name")
+            url = uri("https://maven.pkg.github.com/eliKnowles/HermesHelperFTC")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+                username = project.findProperty("gpr.user") ?: System.getenv("eliKnowles")
+                password = project.findProperty("gpr.token") ?: System.getenv("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")
             }
         }
     }
